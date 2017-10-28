@@ -1,13 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
+import datetime
 
 
-
-class login_form (forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username','password']
-
-    def __init__(self,*args,**kwargs):
-        super(login_form, self).__init__(*args,*kwargs)
-        self.fields['password'].widget = forms.PasswordInput()
+class DateForm(forms.Form):
+    startdate = forms.DateField(initial=datetime.date.today, required = True)
+    enddate = forms.DateField(initial=datetime.date.today, required = True)

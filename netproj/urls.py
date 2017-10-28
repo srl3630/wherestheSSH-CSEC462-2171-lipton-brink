@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from mymap.views import mymapjson
+from mymap.views import mymapjson, myquery
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$',mymapjson.as_view(),name='Da Map'),
     url(r'^admin/', admin.site.urls),
+    url(r'^query$', myquery, name= 'query'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
