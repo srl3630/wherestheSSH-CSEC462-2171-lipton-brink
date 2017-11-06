@@ -8,132 +8,665 @@
     -->
     <title>Wheres The SSH</title>
 
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <style type="text/css">
-
-
-    #axes {
-      stroke: #BDBDBD;
-      stroke-width: 0.5;
-    }
+	body { background-color: #30303d; color: #fff; }
+	#chartdiv {
+ 	 width: 100%;
+  	 height: 500px;
+}
 
     </style>
 </head>
 <body>
 <p id="DATE"></p>
-<div id="vis"></div>
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+crossorigin="anonymous"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+<script src="https://www.amcharts.com/lib/3/ammap_amcharts_extension.js"></script>
+<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/continentsLow.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/usa2Low.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<div id="chartdiv"></div>
+<script type = "text/javascript">
+var mylogs = 0;
+var havelogs = 0;
+var map = AmCharts.makeChart( "chartdiv", {
+  "type": "map",
+  "theme": "dark",
+  "colorSteps": 10,
 
-<script type="text/javascript">
+  "dataProvider": {
+    "map": "usa2Low",
+    "areasSettings": {
+    "autoZoom": true
+  },
+  "areas": [ {
+      "id": "US-AL",
+      "value": 0
+    }, {
+      "id": "US-AK",
+      "value": 0
+    }, {
+      "id": "US-AZ",
+      "value": 0
+    }, {
+      "id": "US-AR",
+      "value": 0
+    }, {
+      "id": "US-CA",
+      "value": 0
+    }, {
+      "id": "US-CO",
+      "value": 0
+    }, {
+      "id": "US-CT",
+      "value": 0
+    }, {
+      "id": "US-DE",
+      "value": 0
+    }, {
+      "id": "US-FL",
+      "value": 0
+    }, {
+      "id": "US-GA",
+      "value": 0
+    }, {
+      "id": "US-HI",
+      "value": 1
+    }, {
+      "id": "US-ID",
+      "value": 0
+    }, {
+      "id": "US-IL",
+      "value": 0
+    }, {
+      "id": "US-IN",
+      "value": 0
+    }, {
+      "id": "US-IA",
+      "value": 0
+    }, {
+      "id": "US-KS",
+      "value": 0
+    }, {
+      "id": "US-KY",
+      "value": 0
+    }, {
+      "id": "US-LA",
+      "value": 0
+    }, {
+      "id": "US-ME",
+      "value": 0
+    }, {
+      "id": "US-MD",
+      "value": 0
+    }, {
+      "id": "US-MA",
+      "value": 0
+    }, {
+      "id": "US-MI",
+      "value": 0
+    }, {
+      "id": "US-MN",
+      "value": 0
+    }, {
+      "id": "US-MS",
+      "value": 0
+    }, {
+      "id": "US-MO",
+      "value": 0
+    }, {
+      "id": "US-MT",
+      "value": 0
+    }, {
+      "id": "US-NE",
+      "value": 0
+    }, {
+      "id": "US-NV",
+      "value": 0
+    }, {
+      "id": "US-NH",
+      "value": 0
+    }, {
+      "id": "US-NJ",
+      "value": 0
+    }, {
+      "id": "US-NM",
+      "value": 0
+    }, {
+      "id": "US-NY",
+      "value": 0
+    }, {
+      "id": "US-NC",
+      "value": 0
+    }, {
+      "id": "US-ND",
+      "value": 0
+    }, {
+      "id": "US-OH",
+      "value": 0
+    }, {
+      "id": "US-OK",
+      "value": 0
+    }, {
+      "id": "US-OR",
+      "value": 0
+    }, {
+      "id": "US-PA",
+      "value": 0
+    }, {
+      "id": "US-RI",
+      "value": 0
+    }, {
+      "id": "US-SC",
+      "value": 0
+    }, {
+      "id": "US-SD",
+      "value": 0
+    }, {
+      "id": "US-TN",
+      "value": 0
+    }, {
+      "id": "US-TX",
+      "value": 0
+    }, {
+      "id": "US-UT",
+      "value": 0
+    }, {
+      "id": "US-VT",
+      "value": 0
+    }, {
+      "id": "US-VA",
+      "value": 0
+    }, {
+      "id": "US-WA",
+      "value": 0
+    }, {
+      "id": "US-WV",
+      "value": 0
+    }, {
+      "id": "US-WI",
+      "value": 0
+    }, {
+      "id": "US-WY",
+      "value": 0
+    } ]
+  },
+
+  "valueLegend": {
+    "right": 10,
+    "minValue": "little",
+    "maxValue": "a lot!"
+  },
+
+  "export": {
+    "enabled": true
+  }
+
+} );
+function drawmappie(mypie){
+var map = AmCharts.makeChart( "chartdiv", {
+  "type": "map",
+  "theme": "dark",
+  "colorSteps": 10,
+
+  "dataProvider": {
+    "map": "usa2Low",
+    "areasSettings": {
+    "autoZoom": true
+  },
+  "areas": [ {
+      "id": "US-AK",
+      "value": mypie['Heat']['AK']
+    }, {
+      "id": "US-AL",
+      "value": mypie['Heat']['AL']
+    }, {
+      "id": "US-AR",
+      "value": mypie['Heat']['AR']
+    }, {
+      "id": "US-AZ",
+      "value": mypie['Heat']['AZ']
+    }, {
+      "id": "US-CA",
+      "value": mypie['Heat']['CA']
+    }, {
+      "id": "US-CO",
+      "value": mypie['Heat']['CO']
+    }, {
+      "id": "US-CT",
+      "value": mypie['Heat']['CT']
+    }, {
+      "id": "US-DE",
+      "value": mypie['Heat']['DE']
+    }, {
+      "id": "US-FL",
+      "value": mypie['Heat']['FL']
+    }, {
+      "id": "US-GA",
+      "value": mypie['Heat']['GA']
+    }, {
+      "id": "US-HI",
+      "value": mypie['Heat']['HI']
+    }, {
+      "id": "US-IA",
+      "value": mypie['Heat']['IA']
+    }, {
+      "id": "US-ID",
+      "value": mypie['Heat']['ID']
+    }, {
+      "id": "US-IL",
+      "value": mypie['Heat']['IL']
+    }, {
+      "id": "US-IN",
+      "value": mypie['Heat']['IN']
+    }, {
+      "id": "US-KS",
+      "value": mypie['Heat']['KS']
+    }, {
+      "id": "US-KY",
+      "value": mypie['Heat']['KY']
+    }, {
+      "id": "US-LA",
+      "value": mypie['Heat']['LA']
+    }, {
+      "id": "US-MA",
+      "value": mypie['Heat']['MA']
+    }, {
+      "id": "US-MD",
+      "value": mypie['Heat']['MD']
+    }, {
+      "id": "US-ME",
+      "value": mypie['Heat']['ME']
+    }, {
+      "id": "US-MI",
+      "value": mypie['Heat']['MI']
+    }, {
+      "id": "US-MN",
+      "value": mypie['Heat']['MN']
+    }, {
+      "id": "US-MO",
+      "value": mypie['Heat']['MO']
+    }, {
+      "id": "US-MS",
+      "value": mypie['Heat']['MS']
+    }, {
+      "id": "US-MT",
+      "value": mypie['Heat']['MT']
+    }, {
+      "id": "US-NC",
+      "value": mypie['Heat']['NC']
+    }, {
+      "id": "US-ND",
+      "value": mypie['Heat']['ND']
+    }, {
+      "id": "US-NE",
+      "value": mypie['Heat']['NE']
+    }, {
+      "id": "US-NH",
+      "value": mypie['Heat']['NH']
+    }, {
+      "id": "US-NJ",
+      "value": mypie['Heat']['NJ']
+    }, {
+      "id": "US-NM",
+      "value": mypie['Heat']['NM']
+    }, {
+      "id": "US-NV",
+      "value": mypie['Heat']['NV']
+    }, {
+      "id": "US-NY",
+      "value": mypie['Heat']['NY']
+    }, {
+      "id": "US-OH",
+      "value": mypie['Heat']['OH']
+    }, {
+      "id": "US-OK",
+      "value": mypie['Heat']['OK']
+    }, {
+      "id": "US-OR",
+      "value": mypie['Heat']['OR']
+    }, {
+      "id": "US-PA",
+      "value": mypie['Heat']['PA']
+    }, {
+      "id": "US-RI",
+      "value": mypie['Heat']['RI']
+    }, {
+      "id": "US-SC",
+      "value": mypie['Heat']['SC']
+    }, {
+      "id": "US-SD",
+      "value": mypie['Heat']['SD']
+    }, {
+      "id": "US-TN",
+      "value": mypie['Heat']['TN']
+    }, {
+      "id": "US-TX",
+      "value": mypie['Heat']['TX']
+    }, {
+      "id": "US-UT",
+      "value": mypie['Heat']['UT']
+    }, {
+      "id": "US-VA",
+      "value": mypie['Heat']['VA']
+    }, {
+      "id": "US-VT",
+      "value": mypie['Heat']['VT']
+    }, {
+      "id": "US-WA",
+      "value": mypie['Heat']['WA']
+    }, {
+      "id": "US-WI",
+      "value": mypie['Heat']['WI']
+    }, {
+      "id": "US-WV",
+      "value": mypie['Heat']['WV']
+    }, {
+      "id": "US-WY",
+      "value": mypie['Heat']['WY']
+    } ],
+  },
 
 
-    document.getElementById("DATE").innerHTML = "No logs loaded, pick dates then click enter to use tool"
+  "valueLegend": {
+    "right": 10,
+    "minValue": "little",
+    "maxValue": "a lot!"
+  },
 
-    var logs = 0;
-    var w = 960;
-    var h = 500;
-    var proj = d3.geo.albersUsa()
-    var path = d3.geo.path().projection(proj);
-    var t = proj.translate(); // the projection's default translation
-    var s = proj.scale() // the projection's default scale
+  "export": {
+    "enabled": true
+  },
+  "listeners": [{
+    "event": "positionChanged",
+    "method": updateCustomMarkers
+  }]
+  });
+}
 
-    var map = d3.select("body").append("svg")
-        .attr("width", w)
-        .attr("height", h)
-        .call(d3.behavior.zoom().on("zoom", redraw));
+function redrawmappie(mypie,whatpie){
+var map = AmCharts.makeChart( "chartdiv", {
+  "type": "map",
+  "theme": "dark",
+  "colorSteps": 10,
 
-    var axes = map.append("g").attr("id", "axes");
+  "dataProvider": {
+    "map": "usa2Low",
+    "areasSettings": {
+    "autoZoom": true
+  },
+  "areas": [ {
+      "id": "US-AK",
+      "value": mypie['Heat']['AK']
+    }, {
+      "id": "US-AL",
+      "value": mypie['Heat']['AL']
+    }, {
+      "id": "US-AR",
+      "value": mypie['Heat']['AR']
+    }, {
+      "id": "US-AZ",
+      "value": mypie['Heat']['AZ']
+    }, {
+      "id": "US-CA",
+      "value": mypie['Heat']['CA']
+    }, {
+      "id": "US-CO",
+      "value": mypie['Heat']['CO']
+    }, {
+      "id": "US-CT",
+      "value": mypie['Heat']['CT']
+    }, {
+      "id": "US-DE",
+      "value": mypie['Heat']['DE']
+    }, {
+      "id": "US-FL",
+      "value": mypie['Heat']['FL']
+    }, {
+      "id": "US-GA",
+      "value": mypie['Heat']['GA']
+    }, {
+      "id": "US-HI",
+      "value": mypie['Heat']['HI']
+    }, {
+      "id": "US-IA",
+      "value": mypie['Heat']['IA']
+    }, {
+      "id": "US-ID",
+      "value": mypie['Heat']['ID']
+    }, {
+      "id": "US-IL",
+      "value": mypie['Heat']['IL']
+    }, {
+      "id": "US-IN",
+      "value": mypie['Heat']['IN']
+    }, {
+      "id": "US-KS",
+      "value": mypie['Heat']['KS']
+    }, {
+      "id": "US-KY",
+      "value": mypie['Heat']['KY']
+    }, {
+      "id": "US-LA",
+      "value": mypie['Heat']['LA']
+    }, {
+      "id": "US-MA",
+      "value": mypie['Heat']['MA']
+    }, {
+      "id": "US-MD",
+      "value": mypie['Heat']['MD']
+    }, {
+      "id": "US-ME",
+      "value": mypie['Heat']['ME']
+    }, {
+      "id": "US-MI",
+      "value": mypie['Heat']['MI']
+    }, {
+      "id": "US-MN",
+      "value": mypie['Heat']['MN']
+    }, {
+      "id": "US-MO",
+      "value": mypie['Heat']['MO']
+    }, {
+      "id": "US-MS",
+      "value": mypie['Heat']['MS']
+    }, {
+      "id": "US-MT",
+      "value": mypie['Heat']['MT']
+    }, {
+      "id": "US-NC",
+      "value": mypie['Heat']['NC']
+    }, {
+      "id": "US-ND",
+      "value": mypie['Heat']['ND']
+    }, {
+      "id": "US-NE",
+      "value": mypie['Heat']['NE']
+    }, {
+      "id": "US-NH",
+      "value": mypie['Heat']['NH']
+    }, {
+      "id": "US-NJ",
+      "value": mypie['Heat']['NJ']
+    }, {
+      "id": "US-NM",
+      "value": mypie['Heat']['NM']
+    }, {
+      "id": "US-NV",
+      "value": mypie['Heat']['NV']
+    }, {
+      "id": "US-NY",
+      "value": mypie['Heat']['NY']
+    }, {
+      "id": "US-OH",
+      "value": mypie['Heat']['OH']
+    }, {
+      "id": "US-OK",
+      "value": mypie['Heat']['OK']
+    }, {
+      "id": "US-OR",
+      "value": mypie['Heat']['OR']
+    }, {
+      "id": "US-PA",
+      "value": mypie['Heat']['PA']
+    }, {
+      "id": "US-RI",
+      "value": mypie['Heat']['RI']
+    }, {
+      "id": "US-SC",
+      "value": mypie['Heat']['SC']
+    }, {
+      "id": "US-SD",
+      "value": mypie['Heat']['SD']
+    }, {
+      "id": "US-TN",
+      "value": mypie['Heat']['TN']
+    }, {
+      "id": "US-TX",
+      "value": mypie['Heat']['TX']
+    }, {
+      "id": "US-UT",
+      "value": mypie['Heat']['UT']
+    }, {
+      "id": "US-VA",
+      "value": mypie['Heat']['VA']
+    }, {
+      "id": "US-VT",
+      "value": mypie['Heat']['VT']
+    }, {
+      "id": "US-WA",
+      "value": mypie['Heat']['WA']
+    }, {
+      "id": "US-WI",
+      "value": mypie['Heat']['WI']
+    }, {
+      "id": "US-WV",
+      "value": mypie['Heat']['WV']
+    }, {
+      "id": "US-WY",
+      "value": mypie['Heat']['WY']
+    } ],
+    "images":mypie[whatpie]
+  },
 
-    var xAxis = axes.append("line")
-        .attr("x1", t[0])
-        .attr("y1", 0)
-        .attr("x2", t[0])
-        .attr("y2", h);
 
-    var yAxis = axes.append("line")
-        .attr("x1", 0)
-        .attr("y1", t[1])
-        .attr("x2", w)
-        .attr("y2", t[1]);
+  "valueLegend": {
+    "right": 10,
+    "minValue": "little",
+    "maxValue": "a lot!"
+  },
 
-    var us = map.append("g")
-	     .attr("id", "us")
+  "export": {
+    "enabled": true
+  },
+  "listeners": [{
+    "event": "positionChanged",
+    "method": updateCustomMarkers
+  }]
+  });
+  console.log(mypie[whatpie])
+}
+function updateCustomMarkers(event) {
+  // get map object
+  var map = event.chart;
 
-    d3.json("/static/us-states.json", function (json) {
-      us.selectAll("path")
-          .data(json.features)
-        .enter().append("path")
-          .attr("d", path)
-	.style("stroke", "#fff")
-        .style("stroke-width", "1")
-        .style("fill","rgb(213,222,217)");
+  // go through all of the images
+  for (var x = 0; x < map.dataProvider.images.length; x++) {
 
-    });
+    // get MapImage object
+    var image = map.dataProvider.images[x];
 
-
-
-    function redraw() {
-      // d3.event.translate (an array) stores the current translation from the parent SVG element
-      // t (an array) stores the projection's default translation
-      // we add the x and y vales in each array to determine the projection's new translation
-      var tx = t[0] * d3.event.scale + d3.event.translate[0];
-      var ty = t[1] * d3.event.scale + d3.event.translate[1];
-      proj.translate([tx, ty]);
-
-      // now we determine the projection's new scale, but there's a problem:
-      // the map doesn't 'zoom onto the mouse point'
-      proj.scale(s * d3.event.scale);
-
-      // redraw the map
-      us.selectAll("path").attr("d", path);
-
-      // redraw the x axis
-      xAxis.attr("x1", tx).attr("x2", tx);
-
-      // redraw the y axis
-      yAxis.attr("y1", ty).attr("y2", ty);
+    // Is it a Pie?
+    if (image.pie === undefined) {
+      continue;
     }
-     $(document).ready(function(){
+
+    // create id
+    if (image.id === undefined) {
+      image.id = "amcharts_pie_" + x;
+    }
+    // Add theme
+    if ("undefined" == typeof image.pie.theme) {
+      image.pie.theme = map.theme;
+    }
+
+    // check if it has corresponding HTML element
+    if ("undefined" == typeof image.externalElement) {
+      image.externalElement = createCustomMarker(image);
+    }
+
+    // reposition the element accoridng to coordinates
+    var xy = map.coordinatesToStageXY(image.longitude, image.latitude);
+    image.externalElement.style.top = xy.y + "px";
+    image.externalElement.style.left = xy.x + "px";
+    image.externalElement.style.marginTop = Math.round(image.height / -2) + "px";
+    image.externalElement.style.marginLeft = Math.round(image.width / -2) + "px";
+  }
+}
+
+/**
+ * Creates a custom map marker - a div for container and a
+ * pie chart in it
+ */
+function createCustomMarker(image) {
+
+  // Create chart container
+  var holder = document.createElement("div");
+  holder.id = image.id;
+  holder.title = image.title;
+  holder.style.position = "absolute";
+  holder.style.width = image.width + "px";
+  holder.style.height = image.height + "px";
+
+  // Append the chart container to the map container
+  image.chart.chartDiv.appendChild(holder);
+
+  // Create a pie chart
+  var chart = AmCharts.makeChart(image.id, image.pie);
+
+  return holder;
+}
+  $(document).ready(function(){
     $('form').submit(function(event){
         event.preventDefault();
+        var start = document.getElementById('start');
+        var end = document.getElementById('end');
         $.ajax({
         url: "/query",
         method: 'post',
         data:$(this).serialize(),
         success:function(response){
-            for (var key in response)
-                us.selectAll("circle")
-                    .data(response[key]).enter()
-                    .append("circle")
-                    .attr("cx", function(d) {
-                        return projection([d.lon, d.lat])[0];
-                     })
-                    .attr("cy", function(d) {
-                        return projection([d.lon, d.lat])[1];
-                    })
-                    .attr("r", "20px")
-                    .style("fill", "rgb(217,91,67)")
-                    .style("opacity", 0.85)
-
+            havelogs = 1;
+            mylogs = response;
+            drawmappie(response)
+            document.getElementById("DATE").innerHTML = "showing connections from " + start.value + " to " + end.value;
+        },
+        error:function(error){
+            alert('please enter valid dates');
         }
-
 
 
         })
     })
 })
-
 </script>
+<h3>Enter dates in format yyyy-mm-dd</h3>
 <form class="" action="/query" method="post">{% csrf_token %}
-    <p>Start date(yyyy-mm-dd)<input type="text" name="startdate">
-        End date(yyyy-mm-dd)<input type="text" name="enddate"></p>
+    <p>Start date(yyyy-mm-dd)<input type="text" name="startdate" id="start">
+        End date(yyyy-mm-dd)<input type="text" name="enddate" id ="end"></p>
     <p><input type="submit" name="" value="Get Logs"></p>
 </form>
-<h3>Enter dates in format yyyy-mm-dd</h3>
-
-
+<h3>Click one of these buttons once logs are loaded</h3>
+<input id="authvno" type="button" class = "ctrl-standard is-reversed typ-subhed fx-bubbleDown" value="Auth Vs No Auth" onclick="redrawmappie(mylogs,'Authvno');" />
+<input id="ipauth" type="button" class = "ctrl-standard is-reversed typ-subhed fx-bubbleDown"  value="IPs not authorized" onclick="redrawmappie(mylogs,'NOIPAuth');" />
+<input id="noipauth" type="button" class = "ctrl-standard is-reversed typ-subhed fx-bubbleDown"  value="IPs authorized" onclick="redrawmappie(mylogs,'IPAuth');" />
 </body>
 </html>
