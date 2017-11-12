@@ -1,11 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-    <!--
-      Zoom/pan map example: integrates d3.geo and d3.behavior
-      Iain Dillingham, http://dillingham.me.uk/
-      With help from Jason Davies, http://www.jasondavies.com/
-    -->
     <title>Wheres The SSH</title>
 
     <style type="text/css">
@@ -14,15 +9,84 @@
  	 width: 100%;
   	 height: 500px;
 }
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-family: Courier New;
+    font-size: 1em;
+}
+
+.button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+.button2 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+.button2:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+.button3 {
+    background-color: white;
+    color: black;
+    border: 2px solid #f44336;
+}
+
+.button3:hover {
+    background-color: #f44336;
+    color: white;
+}
+.submit{
+    background-color: black; /* Green */
+    border: 2px solid white;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-family: Courier New;
+    font-size: 1em;
+}
+.submit:hover {
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+}
 
     </style>
 </head>
 <body>
-<p id="DATE"></p>
+<p id="DATE">Welcome to Where's the SSH: Specify Dates for Visualization</p>
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/pie.js"></script>
 <script src="https://www.amcharts.com/lib/3/ammap_amcharts_extension.js"></script>
@@ -31,13 +95,14 @@ crossorigin="anonymous"></script>
 <script src="https://www.amcharts.com/lib/3/maps/js/continentsLow.js"></script>
 <script src="https://www.amcharts.com/lib/3/maps/js/usa2Low.js"></script>
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all"/>
 <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
 <div id="chartdiv"></div>
-<script type = "text/javascript">
+<script type="text/javascript">
 var mylogs = 0;
-var havelogs = 0;
-var map = AmCharts.makeChart( "chartdiv", {
+var map = 0;
+document.getElementById("chartdiv").innerHTML = "";
+map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "theme": "dark",
   "colorSteps": 10,
@@ -202,8 +267,8 @@ var map = AmCharts.makeChart( "chartdiv", {
 
   "valueLegend": {
     "right": 10,
-    "minValue": "little",
-    "maxValue": "a lot!"
+    "minValue": "Least amount of connections",
+    "maxValue": "Most amount of connections"
   },
 
   "export": {
@@ -212,7 +277,8 @@ var map = AmCharts.makeChart( "chartdiv", {
 
 } );
 function drawmappie(mypie){
-var map = AmCharts.makeChart( "chartdiv", {
+document.getElementById("chartdiv").innerHTML = "";
+map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "theme": "dark",
   "colorSteps": 10,
@@ -378,8 +444,8 @@ var map = AmCharts.makeChart( "chartdiv", {
 
   "valueLegend": {
     "right": 10,
-    "minValue": "little",
-    "maxValue": "a lot!"
+    "minValue": "Least amount of connections",
+    "maxValue": "Most amount of connections"
   },
 
   "export": {
@@ -393,7 +459,7 @@ var map = AmCharts.makeChart( "chartdiv", {
 }
 
 function redrawmappie(mypie,whatpie){
-var map = AmCharts.makeChart( "chartdiv", {
+  map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "theme": "dark",
   "colorSteps": 10,
@@ -560,8 +626,8 @@ var map = AmCharts.makeChart( "chartdiv", {
 
   "valueLegend": {
     "right": 10,
-    "minValue": "little",
-    "maxValue": "a lot!"
+    "minValue": "Least amount of connections",
+    "maxValue": "Most amount of connections"
   },
 
   "export": {
@@ -576,13 +642,13 @@ var map = AmCharts.makeChart( "chartdiv", {
 }
 function updateCustomMarkers(event) {
   // get map object
-  var map = event.chart;
+  var notmap = event.chart;
 
   // go through all of the images
-  for (var x = 0; x < map.dataProvider.images.length; x++) {
+  for (var x = 0; x < notmap.dataProvider.images.length; x++) {
 
     // get MapImage object
-    var image = map.dataProvider.images[x];
+    var image = notmap.dataProvider.images[x];
 
     // Is it a Pie?
     if (image.pie === undefined) {
@@ -595,7 +661,7 @@ function updateCustomMarkers(event) {
     }
     // Add theme
     if ("undefined" == typeof image.pie.theme) {
-      image.pie.theme = map.theme;
+      image.pie.theme = notmap.theme;
     }
 
     // check if it has corresponding HTML element
@@ -604,7 +670,7 @@ function updateCustomMarkers(event) {
     }
 
     // reposition the element accoridng to coordinates
-    var xy = map.coordinatesToStageXY(image.longitude, image.latitude);
+    var xy = notmap.coordinatesToStageXY(image.longitude, image.latitude);
     image.externalElement.style.top = xy.y + "px";
     image.externalElement.style.left = xy.x + "px";
     image.externalElement.style.marginTop = Math.round(image.height / -2) + "px";
@@ -644,10 +710,10 @@ function createCustomMarker(image) {
         method: 'post',
         data:$(this).serialize(),
         success:function(response){
-            havelogs = 1;
             mylogs = response;
-            drawmappie(response)
+			drawmappie(response);
             document.getElementById("DATE").innerHTML = "showing connections from " + start.value + " to " + end.value;
+
         },
         error:function(error){
             alert('please enter valid dates');
@@ -657,16 +723,20 @@ function createCustomMarker(image) {
         })
     })
 })
+
 </script>
 <h3>Enter dates in format yyyy-mm-dd</h3>
 <form class="" action="/query" method="post">{% csrf_token %}
-    <p>Start date(yyyy-mm-dd)<input type="text" name="startdate" id="start">
-        End date(yyyy-mm-dd)<input type="text" name="enddate" id ="end"></p>
-    <p><input type="submit" name="" value="Get Logs"></p>
+    <p>Start date <input type="text" name="startdate" id="start">
+        End date <input type="text" name="enddate" id="end"></p>
+    <p><input type="submit" name="" value="Get Logs" class="submit"></p>
 </form>
 <h3>Click one of these buttons once logs are loaded</h3>
-<input id="authvno" type="button" class = "ctrl-standard is-reversed typ-subhed fx-bubbleDown" value="Auth Vs No Auth" onclick="redrawmappie(mylogs,'Authvno');" />
-<input id="ipauth" type="button" class = "ctrl-standard is-reversed typ-subhed fx-bubbleDown"  value="IPs not authorized" onclick="redrawmappie(mylogs,'NOIPAuth');" />
-<input id="noipauth" type="button" class = "ctrl-standard is-reversed typ-subhed fx-bubbleDown"  value="IPs authorized" onclick="redrawmappie(mylogs,'IPAuth');" />
+<button id="authvno" type="button" class="button button1" onclick = "var mylogstemp = JSON.parse(JSON.stringify(mylogs));redrawmappie(mylogs,'Authvno');mylogs=mylogstemp">Auth Vs No Auth
+</button>
+<button id="noipauth" type="button" class="button button2" onclick = "var mylogstemp = JSON.parse(JSON.stringify(mylogs));redrawmappie(mylogs,'NOIPAuth');mylogs=mylogstemp">IPs not authorized
+</button>
+<button id="ipauth" type="button" class="button button3" onclick = "var mylogstemp = JSON.parse(JSON.stringify(mylogs));redrawmappie(mylogs,'IPAuth');mylogs=mylogstemp">IPs authorized
+</button>
 </body>
 </html>
