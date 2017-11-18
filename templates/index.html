@@ -99,20 +99,22 @@
 <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
 <div id="chartdiv"></div>
 <script type="text/javascript">
-var mylogs = 0;
-var map = 0;
-document.getElementById("chartdiv").innerHTML = "";
+var mylogs = 0; // log holder
+var map = 0; // map holder
+document.getElementById("chartdiv").innerHTML = ""; // zeroes out map
+drawpie(); // draws intial map
+function drawpie(){
 map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "theme": "dark",
-  "colorSteps": 10,
+  "colorSteps": 50, //set intial map settings
 
   "dataProvider": {
-    "map": "usa2Low",
+    "map": "usa2Low", //specify usa map
     "areasSettings": {
-    "autoZoom": true
+    "autoZoom": true  //add zoom functionality
   },
-  "areas": [ {
+  "areas": [ { // intializa states and set heat
       "id": "US-AL",
       "value": 0
     }, {
@@ -265,23 +267,23 @@ map = AmCharts.makeChart( "chartdiv", {
     } ]
   },
 
-  "valueLegend": {
-    "right": 10,
-    "minValue": "Least amount of connections",
-    "maxValue": "Most amount of connections"
+  "valueLegend": { //create legend
+    "right": 50,
+    "minValue": "No Connections",
+    "maxValue": "Most Connections"
   },
 
   "export": {
-    "enabled": true
+    "enabled": true // make map downloadable for presentation purposes
   }
 
-} );
-function drawmappie(mypie){
+} );}
+function drawmappie(mypie){  //redraw map with heat map function based on logs
 document.getElementById("chartdiv").innerHTML = "";
 map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "theme": "dark",
-  "colorSteps": 10,
+  "colorSteps": 50,
 
   "dataProvider": {
     "map": "usa2Low",
@@ -289,7 +291,7 @@ map = AmCharts.makeChart( "chartdiv", {
     "autoZoom": true
   },
   "areas": [ {
-      "id": "US-AK",
+      "id": "US-AK", //set to logs heat map values
       "value": mypie['Heat']['AK']
     }, {
       "id": "US-AL",
@@ -443,26 +445,26 @@ map = AmCharts.makeChart( "chartdiv", {
 
 
   "valueLegend": {
-    "right": 10,
-    "minValue": "Least amount of connections",
-    "maxValue": "Most amount of connections"
+    "right": 50,
+    "minValue": "No Connections",
+    "maxValue": "Most Connections"
   },
 
   "export": {
     "enabled": true
   },
-  "listeners": [{
+  "listeners": [{ // specify pie chart movement handler and creator
     "event": "positionChanged",
     "method": updateCustomMarkers
   }]
   });
 }
 
-function redrawmappie(mypie,whatpie){
+function redrawmappie(mypie,whatpie){ //draw map with pie charts of specified values
   map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "theme": "dark",
-  "colorSteps": 10,
+  "colorSteps": 50,
 
   "dataProvider": {
     "map": "usa2Low",
@@ -620,14 +622,14 @@ function redrawmappie(mypie,whatpie){
       "id": "US-WY",
       "value": mypie['Heat']['WY']
     } ],
-    "images":mypie[whatpie]
+    "images":mypie[whatpie] //sets images to be the specifed value from logs
   },
 
 
   "valueLegend": {
-    "right": 10,
-    "minValue": "Least amount of connections",
-    "maxValue": "Most amount of connections"
+    "right": 50,
+    "minValue": "No Connections",
+    "maxValue": "Most Connections"
   },
 
   "export": {
@@ -640,6 +642,7 @@ function redrawmappie(mypie,whatpie){
   });
   console.log(mypie[whatpie])
 }
+//updates pie charts
 function updateCustomMarkers(event) {
   // get map object
   var notmap = event.chart;
@@ -700,22 +703,27 @@ function createCustomMarker(image) {
 
   return holder;
 }
-  $(document).ready(function(){
+  $(document).ready(function(){ //query server using ajax for logs on submit
     $('form').submit(function(event){
-        event.preventDefault();
-        var start = document.getElementById('start');
-        var end = document.getElementById('end');
+        event.preventDefault(); //prevent page from refreshing
         $.ajax({
-        url: "/query",
-        method: 'post',
-        data:$(this).serialize(),
+        url: "/query", //query website /query
+        method: 'post', //use post request format
+        data:$(this).serialize(), //serialize input data to json
         success:function(response){
-            mylogs = response;
-			drawmappie(response);
+			if(response['Authvno'].length == 0){ // edge case if no logs were picked up
+				alert('No logs found during these dates')
+				document.getElementById("DATE").innerHTML = "Please enter a start and end date";
+				drawpie(); //redraw default map
+			}
+			else{
+            mylogs = response; //store log data
+			drawmappie(response); //draw heat map based on data
             document.getElementById("DATE").innerHTML = "showing connections from " + start.value + " to " + end.value;
-
+		}
         },
         error:function(error){
+            //error alert
             alert('please enter valid dates');
         }
 

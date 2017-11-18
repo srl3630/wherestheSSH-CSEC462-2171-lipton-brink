@@ -23,6 +23,7 @@ from mymap.views import mymapjson, myquery
 urlpatterns = [
                   url(r'^$', mymapjson.as_view(), name='Da Map'),
                   url(r'^admin/', admin.site.urls),
+                  #/query, query for log data
                   url(r'^query$', myquery, name='query'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
