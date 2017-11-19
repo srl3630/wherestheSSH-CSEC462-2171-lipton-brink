@@ -707,7 +707,7 @@ function createCustomMarker(image) {
     $('form').submit(function(event){
         event.preventDefault(); //prevent page from refreshing
         $.ajax({
-        url: "/query", //query website /query
+        url: "/query", //query website
         method: 'post', //use post request format
         data:$(this).serialize(), //serialize input data to json
         success:function(response){

@@ -79,7 +79,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': 'mynetprojdb',
 	'USER': 'netproj',
-	'PASSWORD': 'Short)Girl(Covered)',
+	'PASSWORD': 'default',
 	'HOST': '127.0.0.1',
 	'PORT': '5432'
     }
